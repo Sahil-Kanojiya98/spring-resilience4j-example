@@ -37,7 +37,7 @@ public class ResilientService {
     @Bulkhead(name = "myBulkhead")
     public String bulkheadExample() {
         try {
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(4);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -45,15 +45,9 @@ public class ResilientService {
     }
 
     @TimeLimiter(name = "myTimeLimiter")
-    public CompletableFuture<String> timeLimiterExample() {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                TimeUnit.SECONDS.sleep(3);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            return "Time Limiter Success!";
-        });
+    public CompletableFuture<String> timeLimiterExample() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+        return CompletableFuture.completedFuture("Time Limiter Success!");
     }
 
     public String fallback(Throwable t) {

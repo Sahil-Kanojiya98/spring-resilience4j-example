@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.service.ResilientService;
+import io.github.resilience4j.timelimiter.TimeLimiterRegistry;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,7 +12,7 @@ public class TestController {
 
     private final ResilientService service;
 
-    public TestController(ResilientService service) {
+    public TestController(ResilientService service, TimeLimiterRegistry timeLimiterRegistry) {
         this.service = service;
     }
 
@@ -36,8 +37,7 @@ public class TestController {
     }
 
     @GetMapping("/time")
-    public CompletableFuture<String> timeLimiter() {
+    public CompletableFuture<String> timeLimiter() throws InterruptedException {
         return service.timeLimiterExample();
     }
 }
-
