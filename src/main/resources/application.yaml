@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: spring-resilience4j-example
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      myCircuitBreaker:
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+  retry:
+    configs:
+      default:
+        max-attempts: 3
+        wait-duration: 1s
+    instances:
+      myRetry:
+        base-config: default
+  ratelimiter:
+    instances:
+      myRateLimiter:
+        limitForPeriod: 2
+        limitRefreshPeriod: 5s
+  bulkhead:
+    instances:
+      myBulkhead:
+        maxConcurrentCalls: 2
+  timelimiter:
+    instances:
+      myTimeLimiter:
+        timeoutDuration: 2s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers,retries,ratelimiters,bulkheads,timelimiters
