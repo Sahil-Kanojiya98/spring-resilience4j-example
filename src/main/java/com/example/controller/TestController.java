@@ -33,7 +33,7 @@ public class TestController {
 
     @GetMapping("/bulkhead")
     public String bulkhead() {
-        return service.bulkheadExample();
+        return service.myBulkheadExample();
     }
 
     @GetMapping("/time")

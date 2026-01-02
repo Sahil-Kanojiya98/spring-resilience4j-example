@@ -8,28 +8,35 @@ resilience4j.circuitbreaker:
       slidingWindowSize: 5
       failureRateThreshold: 50
       waitDurationInOpenState: 5s
+
 resilience4j.retry:
-  configs:
-    default:
-      max-attempts: 3
-      wait-duration: 1s
   instances:
     myRetry:
-      base-config: default
+      max-attempts: 3
+      wait-duration: 0s
+
 resilience4j.ratelimiter:
   instances:
     myRateLimiter:
       limitForPeriod: 2
       limitRefreshPeriod: 5s
       timeoutDuration: 0
+
 resilience4j.bulkhead:
   instances:
     myBulkhead:
-      maxConcurrentCalls: 1
+      maxConcurrentCalls: 2
+      maxWaitDuration: 1s
+
 resilience4j.timelimiter:
   instances:
     myTimeLimiter:
-      timeoutDuration: 1s
+      timeoutDuration: 2s
+      cancelRunningFuture: true
+
+server:
+  tomcat:
+    max-threads: 10
 
 logging:
   level:
